@@ -1,0 +1,194 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class ResizablePulse extends ActiveObject implements Drawable2DInterface {
+	private static final double PAUSETIME = 75;
+	private static final double MINRADIUS = 10;
+	private static final double TOGROW = 2;
+	private FramedOval ball;
+	private double startSize;
+	private Drawable2DInterface item;
+	private double growth = TOGROW;
+	// Random number generator for ball's color
+	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
+
+	public ResizablePulse(double xLoc, double yLoc, double size, DrawingCanvas aCanvas) {
+		ball = new FramedOval(xLoc - size / 2, yLoc - size / 2, size, size, aCanvas);
+		startSize = size;
+		setColor();
+		start();
+	}
+
+	// Animate growing and shrinking of ball
+	public void run() {
+
+		while (true) {
+			ball.setWidth(ball.getWidth() + growth);
+			ball.setHeight(ball.getHeight() + growth);
+			ball.move(-growth / 2, -growth / 2);
+			// if ( ball.getWidth() > 2*startSize ||
+			if (ball.getWidth() < startSize / 2.0) {
+				growth = -growth;
+			}
+			pause(PAUSETIME);
+		}
+	}
+
+	public void reverseDirection() {
+		growth = -growth;
+	}
+
+	public boolean overlaps(Drawable2DInterface item) {
+		this.item = item;
+		return ball.overlaps(item);
+	}
+
+	public double getSize() {
+		return ball.getWidth();
+	}
+
+	public Color getColor() {
+		return ball.getColor();
+	}
+
+	public void setColor() {
+		int redNum = colorGenerator.nextValue();
+		int greenNum = colorGenerator.nextValue();
+		int blueNum = colorGenerator.nextValue();
+
+		ball.setColor(new Color(redNum, greenNum, blueNum));
+	}
+
+	public void onMouseClick() {
+
+	}
+
+	public void onMouseRelease() {
+
+	}
+
+	public void Move() {
+
+	}
+
+	@Override
+	public void addToCanvas(DrawingCanvas arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean contains(Location arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public DrawingCanvas getCanvas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isHidden() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void move(double arg0, double arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void moveTo(Location arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void moveTo(double arg0, double arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeFromCanvas() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendBackward() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendForward() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendToBack() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendToFront() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setColor(Color arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Location getLocation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
