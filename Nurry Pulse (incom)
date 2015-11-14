@@ -1,0 +1,41 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class Pulse2 extends WindowController {
+	private static final double BALL_SIZE = 11;
+	private ResizablePulse ball;
+	private Drawable2DInterface itemShape;
+	private Text dateText;
+
+	private ResizablePulse[] currentPulses;
+	private FilledOval[] currentShapes;
+	private int NUM_BALLS;
+	private static final int MAX_NUM_BALLS = 150;
+
+	public void begin() {
+		NUM_BALLS = 0;
+		currentShapes = new FilledOval[MAX_NUM_BALLS];
+		currentPulses = new ResizablePulse[MAX_NUM_BALLS];
+	}
+
+	// Create ResizableBall centered at point
+	public void onMouseClick(Location point) {
+		NUM_BALLS = NUM_BALLS + 1;
+		ball = new ResizablePulse(point.getX(), point.getY(), BALL_SIZE, currentShapes, NUM_BALLS, canvas);
+		currentPulses[NUM_BALLS-1]=ball;
+		for (int n = 0; n < NUM_BALLS; n++) {
+			currentPulses[n].addBall(ball.getBall());
+		}
+		
+	}
+
+	public void overlap() {
+		while (NUM_BALLS >= 2) {
+			for (int n = 0; n < NUM_BALLS; n++) {
+				if (currentPulses[n].touching()) {
+					currentPulses[n].reverseDirection();
+				}
+			}
+		}
+	}
+}
