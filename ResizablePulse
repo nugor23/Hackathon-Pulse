@@ -10,7 +10,7 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 	private Drawable2DInterface item;
 	private double growth = TOGROW;
 	private double COLOR_AVG;
-	private ResizablePulse[] youngerPulses;
+	private ResizablePulse[] olderPulses;
 	// Random number generator for ball's color
 	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
 
@@ -19,7 +19,7 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 		startSize = size;
 		setColor();
 		start();
-		youngerPulses = OlderBalls;
+		olderPulses = OlderBalls;
 	}
 
 	// Animate growing and shrinking of ball
