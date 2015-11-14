@@ -23,7 +23,7 @@ import objectdraw.*;
  * <br>
  * Suggested window size: 400x400
  *
- * @author YOUR-NAME-HERE, YOUR-LAB-SECTION-HERE
+ * @author Chinasa T. Okolo, Friday Lab
  */
 public class StairController extends WindowController
 {
