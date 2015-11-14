@@ -1,0 +1,61 @@
+import objectdraw.*;
+//import WindowController.*;
+
+public class Pulse extends WindowController {
+	private static final double BALL_SIZE = 11;
+	private ResizablePulse ball;
+	private ResizablePulse ball1;
+	private ResizablePulse ball2;
+	private FramedOval test;
+	
+	//private Drawable2DInterface itemShape;
+	
+//	public boolean overlaps() {
+//		FramedOval test1 = new FramedOval(30,30,30, 20, canvas);
+//		FramedOval test2 = new FramedOval(30,30,50,50, canvas);
+//		return test1.overlaps(test2);
+//				//ball1.getBall().overlaps(ball2.getBall());
+//				//ball1.getBall().contains(new Location(300,300));
+//
+//				//ball1.getBall().overlaps(new FilledRect(50,50,100,100, canvas));
+//				
+//	}
+
+	
+	public void begin() {
+		//ball1=new ResizablePulse(300,300,BALL_SIZE,canvas);
+		//ball2=new ResizablePulse(250,400,BALL_SIZE,canvas);
+		//test= new FramedOval(400,200,150,150,canvas);
+		
+		ball1 = new ResizablePulse(300,300, 50, canvas);
+		ball2 = new ResizablePulse(200,300,50,canvas);
+
+		ball1.start();
+		ball2.start(); 
+		
+		if (ball1.overlaps(ball2.getBall())) {
+			System.out.println("asdf");
+		}
+		//System.out.println("running");
+		
+		if( ball1.getBall().overlaps(ball2.getBall())){
+		System.out.println("test");
+			ball1.reverseDirection();
+			ball2.reverseDirection();
+		}
+	}
+	// Create ResizableBall centered at point
+public void onMouseClick(Location point) {
+  //  ball = new ResizablePulse(point.getX(), point.getY(), BALL_SIZE, canvas);
+	ball1.reverseDirection();
+}
+
+//public void overlaps()
+// public void
+// if(ball.overlaps)
+//
+// {
+// // play sound
+// }
+// }
+}
