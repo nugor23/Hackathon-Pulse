@@ -10,16 +10,18 @@ public class ResizablePulse extends ActiveObject {
 	private Drawable2DInterface item;
 	private double growth = TOGROW;
 	private double COLOR_AVG;
-	private ResizablePulse[] olderPulses;
+	private FramedOval[] olderPulses;
+	private int NUM_BALLS;
 	// Random number generator for ball's color
 	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
 
-	public ResizablePulse(double xLoc, double yLoc, double size, ResizablePulse[] olderBalls, DrawingCanvas aCanvas) {
+	public ResizablePulse(double xLoc, double yLoc, double size, FramedOval[] olderBalls,int numBalls, DrawingCanvas aCanvas) {
 		ball = new FramedOval(xLoc - size / 2, yLoc - size / 2, size, size, aCanvas);
+		olderPulses = olderBalls;
 		startSize = size;
+		NUM_BALLS=numBalls;
 		setColor();
 		start();
-		olderPulses = OlderBalls;
 	}
 
 	// Animate growing and shrinking of ball
@@ -41,26 +43,18 @@ public class ResizablePulse extends ActiveObject {
 		growth = -growth;
 	}
 
-	public boolean overlaps(Drawable2DInterface item) {
-		this.item = item;
-		return ball.overlaps(item);
-	}
-
 	public double getSize() {
 		return ball.getWidth();
 	}
-
 
 	public void setColor() {
 		int redNum = colorGenerator.nextValue();
 		int greenNum = colorGenerator.nextValue();
 		int blueNum = colorGenerator.nextValue();
-
+		COLOR_AVG = 1;
 		ball.setColor(new Color(redNum, greenNum, blueNum));
-		COLOR_AVG=(redNum+greenNum+blueNum)/3
 	}
-	
-	
+
 	public int getHue() {
 		int m = 0;
 		for (int n = 6; n > 0; n--) {
@@ -69,11 +63,15 @@ public class ResizablePulse extends ActiveObject {
 			}
 		}
 		return (m);
-
 	}
-	
+
 	public FramedOval getBall() {
 		return ball;
+	}
+	
+	public void addBall(FramedOval newBall){
+		olderPulses[NUM_BALLS]=newBall;
+		NUM_BALLS=NUM_BALLS+1;
 	}
 
 	public boolean touching() {
@@ -85,6 +83,4 @@ public class ResizablePulse extends ActiveObject {
 		}
 		return overlap;
 	}
-
-
 }
