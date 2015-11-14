@@ -1,0 +1,78 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class ResizablePulse extends ActiveObject {
+	private static final double PAUSETIME = 75;
+	private static final double MINRADIUS = 10;
+	private static final double TOGROW = 2;
+	private FramedOval ball;
+	private double startSize;
+	private Drawable2DInterface item;
+	private double growth = TOGROW;
+	// Random number generator for ball's color
+	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
+
+	public ResizablePulse(double xLoc, double yLoc, double size, DrawingCanvas aCanvas) {
+		ball = new FramedOval(xLoc - size / 2, yLoc - size / 2, size, size, aCanvas);
+		startSize = size;
+		setColor();
+		// start();
+	}
+
+	// Animate growing and shrinking of ball
+	public void run() {
+
+		while (true) {
+			ball.setWidth(ball.getWidth() + growth);
+			ball.setHeight(ball.getHeight() + growth);
+			ball.move(-growth / 2, -growth / 2);
+			// if ( ball.getWidth() > 2*startSize ||
+			if (ball.getWidth() < startSize / 2.0) {
+				growth = -growth;
+			}
+			pause(PAUSETIME);
+		}
+	}
+
+	public void reverseDirection() {
+		growth = -growth;
+	}
+
+	public boolean overlapping(Drawable2DInterface item) {
+		// this.item = item;
+		// growth=-growth;
+		// System.out.println("test");
+		return ball.overlaps(item);
+	}
+
+	public FramedOval getBall() {
+		return ball;
+	}
+
+	public double getX() {
+		return ball.getX();
+	}
+
+	public double getSize() {
+		return ball.getWidth();
+	}
+
+	public Color getColor() {
+		return ball.getColor();
+	}
+
+	public void setColor() {
+		int redNum = colorGenerator.nextValue();
+		int greenNum = colorGenerator.nextValue();
+		int blueNum = colorGenerator.nextValue();
+
+		ball.setColor(new Color(redNum, greenNum, blueNum));
+	}
+
+	public boolean overlaps(FramedOval oval) {
+		double range = Math.sqrt(Math.pow((ball.getX() + ball.getWidth() / 2 - oval.getX() - oval.getWidth() / 2), 2)
+				+ Math.pow((ball.getY() - ball.getHeight() / 2 - oval.getY() + oval.getHeight() / 2), 2));
+		return (range >= ball.getWidth() + oval.getWidth());
+}}
+
+//double together = oval.getWidth() + ball.getWidth();return together==Math.sqrt(Math.pow((oval.getX()-ball.getX()),2)+Math.pow((oval.getY()-ball.getY()),2));
