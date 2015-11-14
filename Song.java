@@ -23,15 +23,15 @@ public class Song extends Controller {
 	public Song(ResizablePulse one, ResizablePulse two) {
 		AVG_SIZE = (one.getSize() + two.getSize()) / 2;
 		NOTE = 0;
-		if (one.getColor() == 1) {
+		if (one.getHue() == 1) {
 			fileName = new String("Cello");
-		} else if (one.getColor() == 2) {
+		} else if (one.getHue() == 2) {
 			fileName = new String("Clarinet");
-		} else if (one.getColor() == 3) {
+		} else if (one.getHue() == 3) {
 			fileName = new String("French");
-		} else if (one.getColor() == 4) {
+		} else if (one.getHue() == 4) {
 			fileName = new String("Guitar");
-		} else if (one.getColor() == 5) {
+		} else if (one.getHue() == 5) {
 			fileName = new String("Tuba");
 		} else {
 			fileName = new String("Xylo");
