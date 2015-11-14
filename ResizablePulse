@@ -9,6 +9,7 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 	private double startSize;
 	private Drawable2DInterface item;
 	private double growth = TOGROW;
+	private double COLOR_AVG;
 	// Random number generator for ball's color
 	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
 
@@ -47,9 +48,6 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 		return ball.getWidth();
 	}
 
-	public Color getColor() {
-		return ball.getColor();
-	}
 
 	public void setColor() {
 		int redNum = colorGenerator.nextValue();
@@ -57,6 +55,19 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 		int blueNum = colorGenerator.nextValue();
 
 		ball.setColor(new Color(redNum, greenNum, blueNum));
+		COLOR_AVG=(redNum+greenNum+blueNum)/3
+	}
+	
+	
+	public int getHue() {
+		int m = 0;
+		for (int n = 6; n > 0; n--) {
+			if (COLOR_AVG <= n * 255 / 6) {
+				m = m + 1;
+			}
+		}
+		return (m);
+
 	}
 
 	public void onMouseClick() {
