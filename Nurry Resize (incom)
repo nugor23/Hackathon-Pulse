@@ -1,0 +1,86 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class ResizablePulse extends ActiveObject {
+	private static final double PAUSETIME = 75;
+	private static final double MINRADIUS = 10;
+	private static final double TOGROW = 2;
+	private FilledOval ball;
+	private double startSize;
+	private Drawable2DInterface item;
+	private double growth = TOGROW;
+	private double COLOR_AVG;
+	private FilledOval[] olderPulses;
+	private int NUM_BALLS;
+	// Random number generator for ball's color
+	private RandomIntGenerator colorGenerator = new RandomIntGenerator(0, 255);
+
+	public ResizablePulse(double xLoc, double yLoc, double size, FilledOval[] olderBalls,int numBalls, DrawingCanvas aCanvas) {
+		ball = new FilledOval(xLoc - size / 2, yLoc - size / 2, size, size, aCanvas);
+		olderPulses = olderBalls;
+		startSize = size;
+		NUM_BALLS=numBalls;
+		setColor();
+		start();
+	}
+
+	// Animate growing and shrinking of ball
+	public void run() {
+
+		while (true) {
+			ball.setWidth(ball.getWidth() + growth);
+			ball.setHeight(ball.getHeight() + growth);
+			ball.move(-growth / 2, -growth / 2);
+			// if ( ball.getWidth() > 2*startSize ||
+			if (ball.getWidth() < startSize / 2.0) {
+				growth = -growth;
+			}
+			pause(PAUSETIME);
+		}
+	}
+
+	public void reverseDirection() {
+		growth = -growth;
+	}
+
+	public double getSize() {
+		return ball.getWidth();
+	}
+
+	public void setColor() {
+		int redNum = colorGenerator.nextValue();
+		int greenNum = colorGenerator.nextValue();
+		int blueNum = colorGenerator.nextValue();
+		COLOR_AVG = 1;
+		ball.setColor(new Color(redNum, greenNum, blueNum));
+	}
+
+	public int getHue() {
+		int m = 0;
+		for (int n = 6; n > 0; n--) {
+			if (COLOR_AVG <= n * 255 / 6) {
+				m = m + 1;
+			}
+		}
+		return (m);
+	}
+
+	public FilledOval getBall() {
+		return ball;
+	}
+	
+	public void addBall(FilledOval newBall){
+		olderPulses[NUM_BALLS]=newBall;
+		NUM_BALLS=NUM_BALLS+1;
+	}
+
+	public boolean touching() {
+		boolean overlap = false;
+		for (int n = 0; n < olderPulses.length && !overlap; n++) {
+			if (ball.overlaps(olderPulses[n])) {
+				overlap = true;
+			}
+		}
+		return overlap;
+	}
+}
