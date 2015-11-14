@@ -1,7 +1,7 @@
 import objectdraw.*;
 import java.awt.*;
 
-public class ResizablePulse extends ActiveObject implements Drawable2DInterface {
+public class ResizablePulse extends ActiveObject {
 	private static final double PAUSETIME = 75;
 	private static final double MINRADIUS = 10;
 	private static final double TOGROW = 2;
@@ -71,137 +71,20 @@ public class ResizablePulse extends ActiveObject implements Drawable2DInterface 
 		return (m);
 
 	}
-
-	public void onMouseClick() {
-
+	
+	public FramedOval getBall() {
+		return ball;
 	}
 
-	public void onMouseRelease() {
-
+	public boolean touching() {
+		boolean overlap = false;
+		for (int n = 0; n < olderPulses.length && !overlap; n++) {
+			if (ball.overlaps(olderPulses[n])) {
+				overlap = true;
+			}
+		}
+		return overlap;
 	}
 
-	public void Move() {
-
-	}
-
-	@Override
-	public void addToCanvas(DrawingCanvas arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean contains(Location arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public DrawingCanvas getCanvas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isHidden() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void move(double arg0, double arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void moveTo(Location arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void moveTo(double arg0, double arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeFromCanvas() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendBackward() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendForward() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendToBack() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendToFront() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setColor(Color arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public double getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public double getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }
