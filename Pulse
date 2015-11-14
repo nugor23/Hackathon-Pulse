@@ -21,8 +21,11 @@ public class Pulse2 extends WindowController {
 	// Create ResizableBall centered at point
 	public void onMouseClick(Location point) {
 		ball = new ResizablePulse(point.getX(), point.getY(), BALL_SIZE, currentShapes, NUM_BALLS, canvas);
-		NUM_BALLS=NUM_BALLS+1;
-		currentPulses[NUM_BALLS] = ball;
+		NUM_BALLS = NUM_BALLS + 1;
+		for (int n = 0; n < NUM_BALLS; n++) {
+			currentPulses[n].addBall(ball.getBall());
+		}
+		currentPulses[NUM_BALLS]=ball;
 	}
 
 	public void overlap() {
